@@ -1,0 +1,63 @@
+def search_for_stat(full_lst: list[float], stat: float)-> int:
+	"""searches for a specific stat, or the closest
+	Args:
+		full_lst: the list that needs to be searched
+		stat: that stat to be found
+
+	Returns:
+		The index of the closest stat
+	"""
+	midpoint = (len(full_lst))//2
+	new_lst = full_lst
+	offset = 0
+
+	while len(new_lst) != 0:
+		if new_lst[midpoint] == stat:
+			return midpoint + offset
+		elif stat > new_lst[midpoint]:
+			new_lst = new_lst[:midpoint]
+			
+		else:
+			new_lst = new_lst[midpoint+1:]
+			offset += midpoint + 1
+		midpoint = (len(new_lst))//2
+    
+	if offset == 0:
+		return 0
+	if offset >= len(full_lst):
+		return len(full_lst)-1
+	if abs(full_lst[offset - 1] - stat) <= abs(full_lst[offset] - stat):
+		return offset - 1
+	return offset
+
+def lst_highest(full_lst : list) -> int:
+	"""find the index of highest of the list
+
+	Args: 
+		full_lst - It is the list that you want to find the highest of
+
+	Return:
+		returns the index where the highest is found"""
+	highest = full_lst[0]
+	index = 0
+	for i, value in enumerate(full_lst):
+		if value > highest:
+			index = i
+			highest = value
+	return index
+
+def lst_lowest(full_lst : list) -> int:
+	"""find the index of lowest of the list
+
+	Args: 
+		full_lst - It is the list that you want to find the lowest of
+
+	Return:
+		returns the index where the lowest is found"""
+	lowest = full_lst[0]
+	index = 0
+	for i, value in enumerate(full_lst):
+		if value < lowest:
+			index = i
+			lowest = value
+	return index

@@ -1,0 +1,32 @@
+def sort_lst(full_lst: list, index: int)-> list:
+	"""Sorts a list in descending order
+	Args:
+		full_lst: the list that needs to be sorted
+		index: the index of the full_lst that you want to sort by
+	Return:
+		sorted_lst: the sorted list
+	"""
+	for i in range(len(full_lst)):
+		highest = i
+
+		for j in range(i + 1, len(full_lst)):
+			if float(full_lst[j][index]) > float(full_lst[highest][index]):
+				highest = j
+
+		full_lst[i], full_lst[highest] = full_lst[highest], full_lst[i]
+	return full_lst
+
+def best_for_climbing(data: dict[str, list[float]])-> list[str]:
+	"""Given a dictionary of the agent stats, returns a list of the agent names in order based on well they would be for climbing based on KD first, secondarily WR
+	Args:
+		data: dictionary of the agent stats
+	Returns:
+		agent_names: Sorted names of agents. sorted from Best to worst
+	"""
+	agent_names = []
+
+	for key in data:
+		agent_names.append(key)
+
+	agent_names.sort(key= lambda a: (-data[a][3],-data[a][1]))
+	return agent_names

@@ -1,0 +1,167 @@
+def lst_avg (full_lst : list) -> float:
+	"""find the average of the list
+
+	Args: 
+		full_lst - It is the list that you want to be averaged
+
+	Return:
+		returns a 2 decimal float of the the average"""
+
+	running_total = 0
+	for i in full_lst:
+		running_total = running_total + i
+
+	avg = running_total / len(full_lst)
+		
+	return(round(avg,2))
+
+def lst_highest(full_lst : list) -> int:
+	"""find the index of highest of the list
+
+	Args: 
+		full_lst - It is the list that you want to find the highest of
+
+	Return:
+		returns the index where the highest is found"""
+	highest = full_lst[0]
+	index = 0
+	for i, value in enumerate(full_lst):
+		if value > highest:
+			index = i
+			highest = value
+	return index
+
+def lst_lowest(full_lst : list) -> int:
+	"""find the index of lowest of the list
+
+	Args: 
+		full_lst - It is the list that you want to find the lowest of
+
+	Return:
+		returns the index where the lowest is found"""
+	lowest = full_lst[0]
+	index = 0
+	for i, value in enumerate(full_lst):
+		if value < lowest:
+			index = i
+			lowest = value
+	return index
+
+def read_file (filename : str) -> list[list]:
+	"""reads a file
+
+	Args: 
+		filename: is the name of the file
+
+	Return:
+		lines: the lines of the file"""
+
+	lines = []
+	with open (filename, "r") as file:
+		next(file)
+		for line in file:
+			lines.append(line.strip("").replace("%", "").split(","))
+
+	return lines
+
+def organize_data (unorganized: list[list], index: int) -> list:
+	"""organzizes the data from a from into a list
+
+	Args: 
+		unorganized: a list of lists 
+		index: the index of the coloum from the list of lists you want combined
+
+	Return:
+		final_list: a list of just the one couloum"""
+
+	final_list = []
+	for item in unorganized:
+		final_list.append(item[index])
+
+	return final_list
+
+def name_and_stats (name:str) -> list:
+	"""Finds the stats for an agent
+	Args:
+		name: the name of the agent
+
+	Returns:
+		name_dct[name]: The stats of the agent
+	"""
+	data = read_file("Valorant_V26A5_COMP_Agent_Stats.csv")
+	name_dct = {}
+	names_lst = organize_data(data, 0)
+	wr_lst = [float(item) for item in organize_data(data, 1)]
+	rw_lst = [float(item) for item in organize_data(data, 2)]
+	pr_lst = [float(item) for item in organize_data(data, 3)]
+	kd_lst = [float(item) for item in organize_data(data, 4)]
+
+	for i in range(len(names_lst)):
+		name_i = names_lst[i]
+		if name_i not in name_dct:
+			name_dct[name_i] = []
+		else:
+			continue
+		name_dct[name_i].append(wr_lst[i])
+		name_dct[name_i].append(rw_lst[i])
+		name_dct[name_i].append(pr_lst[i])
+		name_dct[name_i].append(kd_lst[i])
+
+	return name_dct[name]
+
+def output_data (names: list[str], wr: list[float], rw: list[float], pr: list[float], kd: list[float])-> None:
+	"""Creates a .txt file with the stats
+	Args:
+		names: list of the agent names
+		wr: list of the win rate
+		rw: list of the round win rate
+		pr: list of the pick rate
+		kd: list of the Kill/Death rate
+
+	Returns:
+		None
+	"""
+	with open ("output.txt", "w") as out:
+		for i in range(len(names)):
+			out.write(f"Name: {names[i]}\tWinRate: {rw[i]}\tRoundWin Rate: {rw[i]}\tPickRate: {pr[i]}\tK/D: {kd[i]}\n")
+		out.write("\n")
+		out.write(f"The averages are\nWin Rate: {lst_avg(wr)}\nRound Win Rate: {lst_avg(rw)}\nPick Rate: {lst_avg(pr)}\nK/D: {lst_avg(kd)}\n\n")
+		out.write(f"The highest for each stat is-\nWin Rate: {names[lst_highest(wr)]} - {wr[lst_highest(wr)]}\nRound Win Rate: {names[lst_highest(rw)]} - {rw[lst_highest(rw)]}\nPick Rate: {names[lst_highest(pr)]} - {pr[lst_highest(pr)]}\nK/D: {names[lst_highest(kd)]} - {kd[lst_highest(kd)]}\n\n")
+		out.write(f"The lowest for each stat is-\nWin Rate: {names[lst_lowest(wr)]} - {wr[lst_lowest(wr)]}\nRound Win Rate: {names[lst_lowest(rw)]} - {rw[lst_lowest(rw)]}\nPick Rate: {names[lst_lowest(pr)]} - {pr[lst_lowest(pr)]}\nK/D: {names[lst_lowest(kd)]} - {kd[lst_lowest(kd)]}\n\n")
+		agent = input("What Agent stats would you like to see?")
+		stats = name_and_stats (agent)
+		out.write(f"The stats for {agent} are\nWin Rate: {stats[0]}\nRound Win Rate: {stats[1]}\nPick Rate: {stats[2]}\nK/D: {stats[3]}\n")
+
+def sort_lst(full_lst: list, index: int)-> list:
+	"""Sorts a list in descending order
+	Args:
+		full_lst: the list that needs to bne sorted
+		index: the index of the full_lst that you want to sort by
+	Return:
+		sorted_lst: the sorted list
+	"""
+	for i in range(len(full_lst)):
+		highest = i
+
+		for j in range(i + 1, len(full_lst)):
+			if float(full_lst[j][index]) > float(full_lst[highest][index]):
+				highest = j
+
+		full_lst[i], full_lst[highest] = full_lst[highest], full_lst[i]
+
+	return full_lst
+def main():
+	data = read_file("Valorant_V26A5_COMP_Agent_Stats.csv")
+	sort_by = int(input(f"Which stat would you like to sort by? 1 for Win Rate, 2 for Round Win rate, 3 for Pick Rate, 4 for K/D"))
+	data = sort_lst(data, sort_by)
+
+	names_lst = organize_data(data, 0)
+	wr_lst = [float(item) for item in organize_data(data, 1)]
+	rw_lst = [float(item) for item in organize_data(data, 2)]
+	pr_lst = [float(item) for item in organize_data(data, 3)]
+	kd_lst = [float(item) for item in organize_data(data, 4)]
+
+	output_data(names_lst, wr_lst, rw_lst, pr_lst, kd_lst)
+
+if __name__ == "__main__":
+    main()

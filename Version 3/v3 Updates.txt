@@ -1,0 +1,7 @@
+Modified:
+output_data- now prints all of the data in order by the stat the user chooses
+
+Added:
+sort_lst- Sorts a list in descending order
+search_for_stat- searches for a specific stat, or the closest
+	

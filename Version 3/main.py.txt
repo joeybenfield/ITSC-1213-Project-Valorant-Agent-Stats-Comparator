@@ -1,0 +1,165 @@
+from searching import lst_highest,lst_lowest,search_for_stat
+from sorting import sort_lst, best_for_climbing
+
+def lst_avg (full_lst : list) -> float:
+	"""find the average of the list
+
+	Args: 
+		full_lst - It is the list that you want to be averaged
+
+	Return:
+		returns a 2 decimal float of the the average"""
+
+	running_total = 0
+	for i in full_lst:
+		running_total = running_total + i
+
+	avg = running_total / len(full_lst)
+		
+	return(round(avg,2))
+
+def read_file (filename : str) -> list[list]:
+	"""reads a file
+
+	Args: 
+		filename: is the name of the file
+
+	Return:
+		lines: the lines of the file"""
+
+	lines = []
+	with open (filename, "r") as file:
+		next(file)
+		for line in file:
+			lines.append(line.strip("").replace("%", "").split(","))
+
+	return lines
+
+def organize_data (unorganized: list[list], index: int) -> list:
+	"""organzizes the data from a from into a list
+
+	Args: 
+		unorganized: a list of lists 
+		index: the index of the coloum from the list of lists you want combined
+
+	Return:
+		final_list: a list of just the one couloum"""
+
+	final_list = []
+	for item in unorganized:
+		final_list.append(item[index])
+
+	return final_list
+
+def name_and_stats_dict() -> dict[str, list]:
+	data = read_file("Valorant_V26A5_COMP_Agent_Stats.csv")
+	name_dct = {}
+	names_lst = organize_data(data, 0)
+	wr_lst = [float(item) for item in organize_data(data, 1)]
+	rw_lst = [float(item) for item in organize_data(data, 2)]
+	pr_lst = [float(item) for item in organize_data(data, 3)]
+	kd_lst = [float(item) for item in organize_data(data, 4)]
+
+	for i in range(len(names_lst)):
+		name_i = names_lst[i]
+		if name_i not in name_dct:
+			name_dct[name_i] = []
+		else:
+			continue
+		name_dct[name_i].append(wr_lst[i])
+		name_dct[name_i].append(rw_lst[i])
+		name_dct[name_i].append(pr_lst[i])
+		name_dct[name_i].append(kd_lst[i])
+
+	return name_dct
+
+def agent_stats (name:str) -> list:
+	"""Finds the stats for an agent
+	Args:
+		name: the name of the agent
+
+	Returns:
+		The stats of the agent in a list
+	"""
+	all_stats = name_and_stats_dict()
+	return all_stats[name]
+
+def output_data (names: list[str], wr: list[float], rw: list[float], pr: list[float], kd: list[float], threshold: float, chosen_cat: list)-> None:
+	"""Creates a .txt file with the stats
+	Args:
+		names: list of the agent names
+		wr: list of the win rate
+		rw: list of the round win rate
+		pr: list of the pick rate
+		kd: list of the Kill/Death rate
+		threshold: index of the minumum stat for user search
+		chosen_cat: the category the user chose to find the minimum stats for
+	Returns:
+		None
+	"""
+	with open ("output.txt", "w") as out:
+		for i in range(len(names)):
+			out.write(f"Name: {names[i]}\tWinRate: {wr[i]}\tRoundWin Rate: {rw[i]}\tPickRate: {pr[i]}\tK/D: {kd[i]}\n")
+		out.write("\n")
+
+		closest_index  = search_for_stat(chosen_cat, threshold)
+		out.write(f"The Agent with stat closest to {threshold} is {names[closest_index]} with the stat being {chosen_cat[closest_index]}\n")
+
+		out.write(f"The averages are-\nWin Rate: {lst_avg(wr)}\nRound Win Rate: {lst_avg(rw)}\nPick Rate: {lst_avg(pr)}\nK/D: {lst_avg(kd)}\n\n")
+		out.write(f"The highest for each stat is-\nWin Rate: {names[lst_highest(wr)]} - {wr[lst_highest(wr)]}\nRound Win Rate: {names[lst_highest(rw)]} - {rw[lst_highest(rw)]}\nPick Rate: {names[lst_highest(pr)]} - {pr[lst_highest(pr)]}\nK/D: {names[lst_highest(kd)]} - {kd[lst_highest(kd)]}\n\n")
+		out.write(f"The lowest for each stat is-\nWin Rate: {names[lst_lowest(wr)]} - {wr[lst_lowest(wr)]}\nRound Win Rate: {names[lst_lowest(rw)]} - {rw[lst_lowest(rw)]}\nPick Rate: {names[lst_lowest(pr)]} - {pr[lst_lowest(pr)]}\nK/D: {names[lst_lowest(kd)]} - {kd[lst_lowest(kd)]}\n\n")
+		agent = input("What Agent stats would you like to see?")
+		stats = agent_stats(agent)
+		out.write(f"The stats for {agent} are\nWin Rate: {stats[0]}\nRound Win Rate: {stats[1]}\nPick Rate: {stats[2]}\nK/D: {stats[3]}\n")
+		out.write(f"The agents that are best for climbing based on their Win Rate and K/D are: {best_for_climbing(name_and_stats_dict())}\n")
+
+def search_for_stat(full_lst: list[float], stat: float)-> int:
+	"""searches for a specific stat, or the closest
+	Args:
+		full_lst: the list that needs to be searched
+		stat: that stat to be found
+
+	Returns:
+		The index of the closest stat
+	"""
+	midpoint = (len(full_lst))//2
+	new_lst = full_lst
+	offset = 0
+
+	while len(new_lst) != 0:
+		if new_lst[midpoint] == stat:
+			return midpoint + offset
+		elif stat > new_lst[midpoint]:
+			new_lst = new_lst[:midpoint]
+			
+		else:
+			new_lst = new_lst[midpoint+1:]
+			offset += midpoint + 1
+		midpoint = (len(new_lst))//2
+    
+	if offset == 0:
+		return 0
+	if offset >= len(full_lst):
+		return len(full_lst)-1
+	if abs(full_lst[offset - 1] - stat) <= abs(full_lst[offset] - stat):
+		return offset - 1
+	return offset
+
+def main():
+	data = read_file("Valorant_V26A5_COMP_Agent_Stats.csv")
+	sort_by = int(input(f"Which catagory would you like to look for stats in? 1 for Win Rate, 2 for Round Win rate, 3 for Pick Rate, 4 for K/D"))
+	threshold = float(input(f"What do you want the minumum to be in the search?"))
+	data = sort_lst(data, sort_by)
+
+	names_lst = organize_data(data, 0)
+	wr_lst = [float(item) for item in organize_data(data, 1)]
+	rw_lst = [float(item) for item in organize_data(data, 2)]
+	pr_lst = [float(item) for item in organize_data(data, 3)]
+	kd_lst = [float(item) for item in organize_data(data, 4)]
+
+	chosen_cat = [float(item) for item in organize_data(data, sort_by)]
+
+	output_data(names_lst, wr_lst, rw_lst, pr_lst, kd_lst, threshold, chosen_cat)
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,55 @@
+Name: Jett	WinRate: 50.02	RoundWin Rate: 50.77	PickRate: 49.84	K/D: 1.06
+Name: Reyna	WinRate: 49.76	RoundWin Rate: 50.71	PickRate: 46.9	K/D: 1.07
+Name: Clove	WinRate: 55.13	RoundWin Rate: 52.52	PickRate: 46.89	K/D: 0.96
+Name: Chamber	WinRate: 48.83	RoundWin Rate: 50.32	PickRate: 34.91	K/D: 1.1
+Name: Sage	WinRate: 53.14	RoundWin Rate: 51.84	PickRate: 32.48	K/D: 0.93
+Name: Sova	WinRate: 51.26	RoundWin Rate: 51.16	PickRate: 28.31	K/D: 0.98
+Name: Phoenix	WinRate: 50.88	RoundWin Rate: 51.01	PickRate: 27.6	K/D: 1.04
+Name: Omen	WinRate: 45.85	RoundWin Rate: 49.34	PickRate: 23.57	K/D: 0.98
+Name: Cypher	WinRate: 50.46	RoundWin Rate: 50.9	PickRate: 21.89	K/D: 1.01
+Name: Raze	WinRate: 50.38	RoundWin Rate: 50.91	PickRate: 19.21	K/D: 1.02
+Name: Fade	WinRate: 50.39	RoundWin Rate: 50.92	PickRate: 18.95	K/D: 0.93
+Name: Miks	WinRate: 48.42	RoundWin Rate: 50.19	PickRate: 17.74	K/D: 0.92
+Name: Neon	WinRate: 50.11	RoundWin Rate: 50.77	PickRate: 16.87	K/D: 0.99
+Name: Skye	WinRate: 49.62	RoundWin Rate: 50.61	PickRate: 14.73	K/D: 0.92
+Name: Killjoy	WinRate: 51.45	RoundWin Rate: 51.31	PickRate: 11.57	K/D: 1.0
+Name: Gekko	WinRate: 50.19	RoundWin Rate: 50.82	PickRate: 10.52	K/D: 0.89
+Name: Waylay	WinRate: 48.36	RoundWin Rate: 50.22	PickRate: 9.33	K/D: 0.99
+Name: Iso	WinRate: 47.96	RoundWin Rate: 50.07	PickRate: 8.54	K/D: 0.99
+Name: Deadlock	WinRate: 49.7	RoundWin Rate: 50.61	PickRate: 7.96	K/D: 0.97
+Name: Brimstone	WinRate: 49.57	RoundWin Rate: 50.54	PickRate: 7.94	K/D: 0.96
+Name: Tejo	WinRate: 49.75	RoundWin Rate: 50.62	PickRate: 7.87	K/D: 0.94
+Name: KAY/O	WinRate: 46.38	RoundWin Rate: 49.52	PickRate: 7.32	K/D: 0.89
+Name: Breach	WinRate: 48.55	RoundWin Rate: 50.25	PickRate: 7.06	K/D: 0.93
+Name: Yoru	WinRate: 46.84	RoundWin Rate: 49.62	PickRate: 7.03	K/D: 0.98
+Name: Vyse	WinRate: 49.9	RoundWin Rate: 50.75	PickRate: 5.17	K/D: 1.02
+Name: Veto	WinRate: 48.8	RoundWin Rate: 50.34	PickRate: 3.3	K/D: 1.02
+Name: Astra	WinRate: 47.12	RoundWin Rate: 49.8	PickRate: 3.09	K/D: 1.02
+Name: Viper	WinRate: 47.31	RoundWin Rate: 49.81	PickRate: 1.82	K/D: 0.98
+Name: Harbor	WinRate: 45.12	RoundWin Rate: 49.01	PickRate: 1.59	K/D: 0.92
+
+The Agent with stat closest to 25.0 is Omen with the stat being 23.57
+The averages are-
+Win Rate: 49.35
+Round Win Rate: 50.53
+Pick Rate: 17.24
+K/D: 0.98
+
+The highest for each stat is-
+Win Rate: Clove - 55.13
+Round Win Rate: Clove - 52.52
+Pick Rate: Jett - 49.84
+K/D: Chamber - 1.1
+
+The lowest for each stat is-
+Win Rate: Harbor - 45.12
+Round Win Rate: Harbor - 49.01
+Pick Rate: Harbor - 1.59
+K/D: Gekko - 0.89
+
+The stats for Brimstone are
+Win Rate: 49.57
+Round Win Rate: 50.54
+Pick Rate: 7.94
+K/D: 0.96
+The agents that are best for climbing based on their Win Rate and K/D are: ['Chamber', 'Reyna', 'Jett', 'Phoenix', 'Raze', 'Vyse', 'Veto', 'Astra', 'Cypher', 'Killjoy', 'Neon', 'Waylay', 'Iso', 'Sova', 'Viper', 'Yoru', 'Omen', 'Deadlock', 'Clove', 'Brimstone', 'Tejo', 'Sage', 'Fade', 'Breach', 'Skye', 'Miks', 'Harbor', 'Gekko', 'KAY/O']
